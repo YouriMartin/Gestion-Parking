@@ -239,7 +239,17 @@ public class Controller {
             personneElement.setAttribute("prenom", personne.getPrenom());
         }
 
-        // V
+        // Voitures
+        voitures = VoituresManager.getInstance().getALL();
+
+        for (Voiture voiture : voitures) {
+            Element voitureElement = doc.createElement("voiture");
+            voitureElement.appendChild(voitureElement);
+            voitureElement.setAttribute("id", Integer.toString(voiture.getId()));
+            voitureElement.setAttribute("nom", voiture.getNom());
+            voitureElement.setAttribute("plaque-imatriculation", voiture.getPlaqueImmatriculation());
+            
+        }
 
 
         // write dom document to a file
