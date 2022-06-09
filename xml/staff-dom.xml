@@ -6,5 +6,15 @@
         <personne id="4" nom="Martin" prenom="Jean"/>
         <personne id="5" nom="Michel" prenom="Robert"/>
     </personnes>
-    <voitures/>
+    <voitures>
+        <voiture id="1" nom="clio" plaque-imatriculation="AB-545-AB">
+            <personne id="1" nom="Michelee" prenom="Test"/>
+        </voiture>
+        <voiture id="4" nom="Renault" plaque-imatriculation="CD-888-FH">
+            <personne id="2" nom="Test" prenom="Michel"/>
+        </voiture>
+        <voiture id="5" nom="C3 amg" plaque-imatriculation="GD-988-FD">
+            <personne id="1" nom="Michelee" prenom="Test"/>
+        </voiture>
+    </voitures>
 </gestion-parking>

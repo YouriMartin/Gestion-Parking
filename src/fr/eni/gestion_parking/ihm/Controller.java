@@ -113,17 +113,21 @@ public class Controller {
 
     public void selectPersonne() {
         Personne personne = (Personne) personnesFx.getSelectionModel().getSelectedItem();
-        idPersonneSelected = personne.getId();
-        nomPersonneFieldFX.setText(personne.getNom());
-        prenomFieldFx.setText(personne.getPrenom());
+        if (personne != null) {
+            idPersonneSelected = personne.getId();
+            nomPersonneFieldFX.setText(personne.getNom());
+            prenomFieldFx.setText(personne.getPrenom());
+        }
     }
 
     public void selectVoiture() {
         Voiture voiture = (Voiture) voituresFx.getSelectionModel().getSelectedItem();
-        idVoitureSelected = voiture.getId();
-        nomVoitureFieldFx.setText(voiture.getNom());
-        piFieldFx.setText(voiture.getPlaqueImmatriculation());
-        personneSelectFx.setValue(voiture.getPersonnes());
+        if (voiture != null) {
+            idVoitureSelected = voiture.getId();
+            nomVoitureFieldFx.setText(voiture.getNom());
+            piFieldFx.setText(voiture.getPlaqueImmatriculation());
+            personneSelectFx.setValue(voiture.getPersonnes());
+        }
     }
 
     public void addVoiture() {
@@ -244,11 +248,17 @@ public class Controller {
 
         for (Voiture voiture : voitures) {
             Element voitureElement = doc.createElement("voiture");
-            voitureElement.appendChild(voitureElement);
+            voituresElement.appendChild(voitureElement);
             voitureElement.setAttribute("id", Integer.toString(voiture.getId()));
             voitureElement.setAttribute("nom", voiture.getNom());
             voitureElement.setAttribute("plaque-imatriculation", voiture.getPlaqueImmatriculation());
-            
+            if (voiture.getPersonnes() != null) {
+                Element personneVoitureElement = doc.createElement("personne");
+                voitureElement.appendChild(personneVoitureElement);
+                personneVoitureElement.setAttribute("id", Integer.toString(voiture.getPersonnes().getId()));
+                personneVoitureElement.setAttribute("nom", voiture.getPersonnes().getNom());
+                personneVoitureElement.setAttribute("prenom", voiture.getPersonnes().getPrenom());
+            }
         }
 
 
@@ -261,4 +271,5 @@ public class Controller {
         }
 
     }
+
 }
