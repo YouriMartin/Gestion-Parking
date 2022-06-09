@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gestion-parking>
+    <personnes>
+        <personne id="1" nom="Michelee" prenom="Test"/>
+        <personne id="2" nom="Test" prenom="Michel"/>
+        <personne id="4" nom="Martin" prenom="Jean"/>
+        <personne id="5" nom="Michel" prenom="Robert"/>
+    </personnes>
+    <voitures/>
+</gestion-parking>
