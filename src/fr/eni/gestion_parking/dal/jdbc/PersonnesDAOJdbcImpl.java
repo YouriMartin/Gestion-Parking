@@ -77,9 +77,7 @@ public class PersonnesDAOJdbcImpl implements PersonnesDAO {
             requete.setString(1, personne.getNom());
             requete.setString(2, personne.getPrenom());
             requete.setInt(3, personne.getId());
-            requete.executeUpdate();
-            result = true;
-
+            result = requete.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DALException(e.getMessage());
         }
@@ -117,8 +115,7 @@ public class PersonnesDAOJdbcImpl implements PersonnesDAO {
         try (var cnx = JdbcTools.getConnection();
              var requete = cnx.prepareStatement(REQUETE_DELETE);) {
             requete.setInt(1, id);
-            requete.executeUpdate();
-            result = true;
+            result = requete.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DALException(e.getMessage());
         }

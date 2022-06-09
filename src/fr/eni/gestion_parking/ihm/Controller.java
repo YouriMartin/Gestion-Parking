@@ -12,9 +12,13 @@ import javax.xml.transform.stream.StreamResult;
 import fr.eni.gestion_parking.bll.BLLException;
 import fr.eni.gestion_parking.bll.PersonnesManager;
 import fr.eni.gestion_parking.bll.VoituresManager;
+import fr.eni.gestion_parking.bll.VoituresPersonnesManager;
 import fr.eni.gestion_parking.bo.Personne;
 import fr.eni.gestion_parking.bo.Voiture;
+import fr.eni.gestion_parking.bo.VoiturePersonne;
 import fr.eni.gestion_parking.dal.DaoFactory;
+import fr.eni.gestion_parking.dal.VoituresPersonnesDAO;
+import fr.eni.gestion_parking.utils.MonLogger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,11 +27,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Controller {
 
@@ -52,11 +56,17 @@ public class Controller {
     public ComboBox<Personne> personneSelectFx;
     public Label errorVoitureFx;
     public Label errorPersonneFx;
+    public Label errorExportFx;
 
     private List<Personne> personnes = new ArrayList<>();
     private List<Voiture> voitures = new ArrayList<>();
+
+    private List<VoiturePersonne> voituresPersonnes = new ArrayList<>();
     private static Integer idPersonneSelected;
     private static Integer idVoitureSelected;
+
+    public static final Logger logger = MonLogger.getLogger(Controller.class.getSimpleName());
+
 
     public void initialize() throws BLLException {
         setupVoitures();
@@ -76,26 +86,36 @@ public class Controller {
         idVoitureSelected = null;
     }
 
-    public void showError(Label label, BLLException e) {
+    public void showError(Label label, Exception e) {
         label.setVisible(true);
         label.setText(e.getMessage());
         label.setStyle("-fx-text-fill:red;");
     }
 
+    public void resetError() {
+        errorPersonneFx.setVisible(false);
+        errorExportFx.setVisible(false);
+        errorVoitureFx.setVisible(false);
+    }
+
     public void setupPersonnes() throws BLLException {
+        resetError();
         personnes = PersonnesManager.getInstance().getALL();
 
         nameFx.setCellValueFactory(new PropertyValueFactory<Personne, String>("nom"));
         firstnameFx.setCellValueFactory(new PropertyValueFactory<Personne, String>("prenom"));
         personnesFx.setItems(FXCollections.observableArrayList(personnes));
 
-        personneSelectFx.setItems(FXCollections.observableArrayList(personnes));
+        // le select des personnes dans le form voiture
 
-        errorPersonneFx.setVisible(false);
+        personneSelectFx.setItems(FXCollections.observableArrayList(personnes));
+        personneSelectFx.getItems().add(null);
+
 
     }
 
     public void setupVoitures() throws BLLException {
+        resetError();
         voitures = VoituresManager.getInstance().getALL();
 
         voitureNameFx.setCellValueFactory(new PropertyValueFactory<Voiture, String>("nom"));
@@ -107,7 +127,6 @@ public class Controller {
         });
         voituresFx.setItems(FXCollections.observableArrayList(voitures));
 
-        errorVoitureFx.setVisible(false);
 
     }
 
@@ -261,15 +280,60 @@ public class Controller {
             }
         }
 
-
         // write dom document to a file
         try (FileOutputStream output =
-                     new FileOutputStream("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\xml\\staff-dom.xml")) {
+                     new FileOutputStream("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\xml\\GestionParking.xml")) {
             writeXml(doc, output);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
+            showError(errorExportFx, e);
+
         }
 
+    }
+
+    public void exportCsv() throws Exception {
+        try {
+            File file = new File("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\csv\\GestionParking.csv.");
+            Writer writer = new BufferedWriter(new FileWriter(file));
+
+            voituresPersonnes = VoituresPersonnesManager.getInstance().getAll();
+            StringBuilder sb = new StringBuilder();
+            sb.append("id");
+            sb.append(";");
+            sb.append("nom");
+            sb.append(";");
+            sb.append("prenom");
+            sb.append(";");
+            sb.append("id");
+            sb.append(";");
+            sb.append("nom");
+            sb.append(";");
+            sb.append("PI");
+            sb.append(";");
+            sb.append("\n");
+
+            for (VoiturePersonne voiturePersonne : voituresPersonnes) {
+                sb.append(voiturePersonne.getPersonneId());
+                sb.append(";");
+                sb.append(voiturePersonne.getNomPersonne());
+                sb.append(";");
+                sb.append(voiturePersonne.getPrenom());
+                sb.append(";");
+                sb.append(voiturePersonne.getVoitureId());
+                sb.append(";");
+                sb.append(voiturePersonne.getNomVoiture());
+                sb.append(";");
+                sb.append(voiturePersonne.getPI());
+                sb.append("\n");
+            }
+            writer.write(sb.toString());
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, e.getMessage());
+            showError(errorExportFx, e);
+        }
     }
 
 }

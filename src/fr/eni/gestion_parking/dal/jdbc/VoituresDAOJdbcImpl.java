@@ -98,8 +98,7 @@ public class VoituresDAOJdbcImpl implements VoituresDAO {
                 requete.setInt(3, voiture.getPersonnes().getId());
             }
             requete.setInt(4, voiture.getId());
-            requete.executeUpdate();
-            result = true;
+            result = requete.executeUpdate() == 1;
 
         } catch (SQLException e) {
             throw new DALException(e.getMessage());
@@ -151,8 +150,7 @@ public class VoituresDAOJdbcImpl implements VoituresDAO {
         try (var cnx = JdbcTools.getConnection();
              var requete = cnx.prepareStatement(REQUETE_DELETE);) {
             requete.setInt(1, id);
-            requete.executeUpdate();
-            result = true;
+            result = requete.executeUpdate() == 1;
         } catch (SQLException e) {
             throw new DALException(e.getMessage());
         }
