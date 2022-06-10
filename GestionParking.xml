@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="17.0.3" class="java.beans.XMLDecoder">
+ <object class="java.util.ArrayList">
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="PI">
+     <string>AB-545-AB</string>
+    </void>
+    <void property="nomPersonne">
+     <string>Michelee</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Michelee</string>
+    </void>
+    <void property="personneId">
+     <int>1</int>
+    </void>
+    <void property="prenom">
+     <string>Test</string>
+    </void>
+    <void property="voitureId">
+     <int>1</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="PI">
+     <string>GD-988-FD</string>
+    </void>
+    <void property="nomPersonne">
+     <string>Michelee</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Michelee</string>
+    </void>
+    <void property="personneId">
+     <int>1</int>
+    </void>
+    <void property="prenom">
+     <string>Test</string>
+    </void>
+    <void property="voitureId">
+     <int>1</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="PI">
+     <string>GD-988-FD</string>
+    </void>
+    <void property="nomPersonne">
+     <string>Michelee</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Michelee</string>
+    </void>
+    <void property="personneId">
+     <int>1</int>
+    </void>
+    <void property="prenom">
+     <string>Test</string>
+    </void>
+    <void property="voitureId">
+     <int>1</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="PI">
+     <string>CD-888-FH</string>
+    </void>
+    <void property="nomPersonne">
+     <string>Test</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Test</string>
+    </void>
+    <void property="personneId">
+     <int>2</int>
+    </void>
+    <void property="prenom">
+     <string>Michel</string>
+    </void>
+    <void property="voitureId">
+     <int>2</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="nomPersonne">
+     <string>Martin</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Martin</string>
+    </void>
+    <void property="personneId">
+     <int>4</int>
+    </void>
+    <void property="prenom">
+     <string>Jean</string>
+    </void>
+    <void property="voitureId">
+     <int>4</int>
+    </void>
+   </object>
+  </void>
+  <void method="add">
+   <object class="fr.eni.gestion_parking.bo.VoiturePersonne">
+    <void property="nomPersonne">
+     <string>Michel</string>
+    </void>
+    <void property="nomVoiture">
+     <string>Michel</string>
+    </void>
+    <void property="personneId">
+     <int>5</int>
+    </void>
+    <void property="prenom">
+     <string>Robert</string>
+    </void>
+    <void property="voitureId">
+     <int>5</int>
+    </void>
+   </object>
+  </void>
+ </object>
+</java>

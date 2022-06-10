@@ -42,7 +42,7 @@
             <Button fx:id="addPersonneFx" layoutX="456.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#addPersonne" text="Ajouter" />
             <Button fx:id="updatePersonneFx" layoutX="516.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#updatePersonne" text="Modifier" />
             <Button fx:id="deletePersonneFx" layoutX="580.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#deletePersonne" text="Supprimer" />
-            <Button layoutX="112.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#exportXml" text="Exporter les données au format XML" />
+            <Button layoutX="112.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#encodeToFile" text="Exporter les données au format XML" />
             <Button layoutX="412.0" layoutY="399.0" mnemonicParsing="false" onMouseClicked="#exportCsv" text="Exporter les données au format CSV" />
             <ComboBox fx:id="personneSelectFx" layoutX="193.0" layoutY="258.0" prefWidth="150.0" />
             <Label fx:id="errorVoitureFx" layoutX="6.0" layoutY="367.0" prefHeight="17.0" prefWidth="349.0" />

@@ -27,6 +27,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.beans.XMLEncoder;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -225,72 +226,21 @@ public class Controller {
         }
     }
 
-    private static void writeXml(Document doc, OutputStream output) throws TransformerException {
+    public void encodeToFile() throws FileNotFoundException {
+        XMLEncoder encoder = new XMLEncoder(new FileOutputStream("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\xml\\GestionParking.xml"));
 
-        TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
-        DOMSource source = new DOMSource(doc);
-        StreamResult result = new StreamResult(output);
-
-        transformer.transform(source, result);
-
-    }
-
-    public void exportXml() throws ParserConfigurationException, TransformerException, BLLException {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-        // root elements
-        Document doc = docBuilder.newDocument();
-        Element rootElement = doc.createElement("gestion-parking");
-        doc.appendChild(rootElement);
-
-        // child elements
-        Element personnesElement = doc.createElement("personnes");
-        rootElement.appendChild(personnesElement);
-        Element voituresElement = doc.createElement("voitures");
-        rootElement.appendChild(voituresElement);
-
-        // Personne
-        personnes = PersonnesManager.getInstance().getALL();
-
-        for (Personne personne : personnes) {
-            Element personneElement = doc.createElement("personne");
-            personnesElement.appendChild(personneElement);
-            personneElement.setAttribute("id", Integer.toString(personne.getId()));
-            personneElement.setAttribute("nom", personne.getNom());
-            personneElement.setAttribute("prenom", personne.getPrenom());
-        }
-
-        // Voitures
-        voitures = VoituresManager.getInstance().getALL();
-
-        for (Voiture voiture : voitures) {
-            Element voitureElement = doc.createElement("voiture");
-            voituresElement.appendChild(voitureElement);
-            voitureElement.setAttribute("id", Integer.toString(voiture.getId()));
-            voitureElement.setAttribute("nom", voiture.getNom());
-            voitureElement.setAttribute("plaque-imatriculation", voiture.getPlaqueImmatriculation());
-            if (voiture.getPersonnes() != null) {
-                Element personneVoitureElement = doc.createElement("personne");
-                voitureElement.appendChild(personneVoitureElement);
-                personneVoitureElement.setAttribute("id", Integer.toString(voiture.getPersonnes().getId()));
-                personneVoitureElement.setAttribute("nom", voiture.getPersonnes().getNom());
-                personneVoitureElement.setAttribute("prenom", voiture.getPersonnes().getPrenom());
-            }
-        }
-
-        // write dom document to a file
-        try (FileOutputStream output =
-                     new FileOutputStream("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\xml\\GestionParking.xml")) {
-            writeXml(doc, output);
-        } catch (IOException e) {
+        try {
+            voituresPersonnes = VoituresPersonnesManager.getInstance().getAll();
+            encoder.writeObject(voituresPersonnes);
+            encoder.flush();
+        } catch (BLLException e) {
             logger.log(Level.SEVERE, e.getMessage());
             showError(errorExportFx, e);
-
+        } finally {
+            encoder.close();
         }
-
     }
+    
 
     public void exportCsv() throws Exception {
         try {
