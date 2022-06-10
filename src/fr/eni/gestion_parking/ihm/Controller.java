@@ -228,7 +228,6 @@ public class Controller {
 
     public void encodeToFile() throws FileNotFoundException {
         XMLEncoder encoder = new XMLEncoder(new FileOutputStream("C:\\Users\\ymartin2021\\IdeaProjects\\gestion_parking\\xml\\GestionParking.xml"));
-
         try {
             voituresPersonnes = VoituresPersonnesManager.getInstance().getAll();
             encoder.writeObject(voituresPersonnes);
@@ -240,7 +239,7 @@ public class Controller {
             encoder.close();
         }
     }
-    
+
 
     public void exportCsv() throws Exception {
         try {
